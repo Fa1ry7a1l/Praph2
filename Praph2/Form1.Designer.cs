@@ -28,12 +28,150 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            groupBox1 = new GroupBox();
+            button1 = new Button();
+            button2 = new Button();
+            button3 = new Button();
+            trackBar1 = new TrackBar();
+            trackBar2 = new TrackBar();
+            label1 = new Label();
+            label2 = new Label();
+            trackBar3 = new TrackBar();
+            label3 = new Label();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar3).BeginInit();
+            SuspendLayout();
+            // 
+            // groupBox1
+            // 
+            groupBox1.AutoSize = true;
+            groupBox1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            groupBox1.BackColor = SystemColors.Control;
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(trackBar3);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(trackBar2);
+            groupBox1.Controls.Add(trackBar1);
+            groupBox1.Controls.Add(button3);
+            groupBox1.Controls.Add(button2);
+            groupBox1.Controls.Add(button1);
+            groupBox1.Dock = DockStyle.Right;
+            groupBox1.Location = new Point(650, 0);
+            groupBox1.MinimumSize = new Size(150, 0);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(150, 450);
+            groupBox1.TabIndex = 0;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Панелька";
+            groupBox1.Enter += groupBox1_Enter;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(36, 72);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 0;
+            button1.Text = "Задание 1";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(36, 153);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 1;
+            button2.Text = "Задание 2";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(36, 221);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 23);
+            button3.TabIndex = 2;
+            button3.Text = "Задание 3";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // trackBar1
+            // 
+            trackBar1.Location = new Point(20, 266);
+            trackBar1.Name = "trackBar1";
+            trackBar1.Size = new Size(124, 45);
+            trackBar1.TabIndex = 3;
+            // 
+            // trackBar2
+            // 
+            trackBar2.Location = new Point(20, 332);
+            trackBar2.Name = "trackBar2";
+            trackBar2.Size = new Size(124, 45);
+            trackBar2.TabIndex = 4;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(20, 246);
+            label1.Name = "label1";
+            label1.Size = new Size(52, 15);
+            label1.TabIndex = 5;
+            label1.Text = "Оттенок";
+            label1.Click += label1_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(20, 314);
+            label2.Name = "label2";
+            label2.Size = new Size(92, 15);
+            label2.TabIndex = 6;
+            label2.Text = "Насыщенность";
+            // 
+            // trackBar3
+            // 
+            trackBar3.Location = new Point(20, 393);
+            trackBar3.Name = "trackBar3";
+            trackBar3.Size = new Size(124, 45);
+            trackBar3.TabIndex = 7;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(20, 375);
+            label3.Name = "label3";
+            label3.Size = new Size(51, 15);
+            label3.TabIndex = 8;
+            label3.Text = "Яркость";
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(groupBox1);
+            Name = "Form1";
+            Text = "Form1";
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar3).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private GroupBox groupBox1;
+        private Label label2;
+        private Label label1;
+        private TrackBar trackBar2;
+        private TrackBar trackBar1;
+        private Button button3;
+        private Button button2;
+        private Button button1;
+        private Label label3;
+        private TrackBar trackBar3;
     }
 }
