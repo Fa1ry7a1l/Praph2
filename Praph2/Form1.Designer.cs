@@ -66,7 +66,7 @@
             groupBox1.Margin = new Padding(3, 4, 3, 4);
             groupBox1.MinimumSize = new Size(171, 0);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(150, 450);
+            groupBox1.Size = new Size(171, 600);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Панелька";
@@ -96,6 +96,7 @@
             trackBar3.Name = "trackBar3";
             trackBar3.Size = new Size(124, 45);
             trackBar3.TabIndex = 7;
+            trackBar3.MouseCaptureChanged += trackBar3_MouseCaptureChanged;
             // 
             // label2
             // 
@@ -121,6 +122,8 @@
             trackBar2.Name = "trackBar2";
             trackBar2.Size = new Size(124, 45);
             trackBar2.TabIndex = 4;
+            trackBar2.Scroll += trackBar2_Scroll;
+            trackBar2.MouseCaptureChanged += trackBar2_MouseCaptureChanged;
             // 
             // trackBar1
             // 
@@ -128,6 +131,8 @@
             trackBar1.Name = "trackBar1";
             trackBar1.Size = new Size(124, 45);
             trackBar1.TabIndex = 3;
+            trackBar1.Scroll += trackBar1_Scroll;
+            trackBar1.MouseCaptureChanged += trackBar1_MouseCaptureChanged;
             // 
             // button3
             // 

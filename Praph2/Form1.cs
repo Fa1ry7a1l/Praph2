@@ -7,8 +7,9 @@ namespace Praph2
     public partial class Form1 : Form
     {
         State curentState = State.Task0;
-        private int H;
-        private int W;
+        private int BitmapHeight;
+        private int BitmapWidth;
+        int S, H, V;
 
         private Graphics graphics;
 
@@ -117,8 +118,8 @@ namespace Praph2
             {
                 //сохраняем H S V
                 HSVData = new ValueTuple<double, double, double>[fastBitmap.Width, fastBitmap.Height];
-                H = fastBitmap.Height;
-                W = fastBitmap.Width;
+                BitmapHeight = fastBitmap.Height;
+                BitmapWidth = fastBitmap.Width;
 
                 for (int i = 0; i < fastBitmap.Width; i++)
                 {
@@ -168,14 +169,29 @@ namespace Praph2
             }
 
             graphics.Clear(Color.White);
+            graphics.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
 
+            trackBar1.Minimum = -360;
+            trackBar1.Maximum = 360;
+
+            trackBar1.Value = 0;
+
+            trackBar2.Maximum = 256;
+            trackBar2.Minimum = -256;
+            trackBar2.Value = 0;
+
+            trackBar3.Maximum = 256;
+            trackBar3.Minimum = -256;
+            trackBar3.Value = 0;
         }
 
+
+        //сохранение задания 3 по формулам из презы
         private void button4_Click(object sender, EventArgs e)
         {
             if (curentState == State.Task3)
             {
-                Bitmap bitmap = new Bitmap(W, H);
+                Bitmap bitmap = new Bitmap(BitmapWidth, BitmapHeight);
                 using (var fastBitmap = new FastBitmap(bitmap))
                 {
 
@@ -191,22 +207,22 @@ namespace Praph2
                             switch (Hi)
                             {
                                 case 0:
-                                    fastBitmap[i, j] = Color.FromArgb((int)(HSVData[i, j].Item3 * 256), (int)(t * 256), (int)(p * 256));
+                                    fastBitmap[i, j] = Color.FromArgb((int)(HSVData[i, j].Item3 * 255), (int)(t * 255), (int)(p * 255));
                                     break;
                                 case 1:
-                                    fastBitmap[i, j] = Color.FromArgb((int)(q * 256), (int)(HSVData[i, j].Item3 * 256), (int)(p * 256));
+                                    fastBitmap[i, j] = Color.FromArgb((int)(q * 255), (int)(HSVData[i, j].Item3 * 255), (int)(p * 255));
                                     break;
                                 case 2:
-                                    fastBitmap[i, j] = Color.FromArgb((int)(p * 256), (int)(HSVData[i, j].Item3 * 256), (int)(t * 256));
+                                    fastBitmap[i, j] = Color.FromArgb((int)(p * 255), (int)(HSVData[i, j].Item3 * 255), (int)(t * 255));
                                     break;
                                 case 3:
-                                    fastBitmap[i, j] = Color.FromArgb((int)(p * 256), (int)(q * 256), (int)(HSVData[i, j].Item3 * 256));
+                                    fastBitmap[i, j] = Color.FromArgb((int)(p * 255), (int)(q * 255), (int)(HSVData[i, j].Item3 * 255));
                                     break;
                                 case 4:
-                                    fastBitmap[i, j] = Color.FromArgb((int)(t * 256), (int)(p * 256), (int)(HSVData[i, j].Item3 * 256));
+                                    fastBitmap[i, j] = Color.FromArgb((int)(t * 255), (int)(p * 255), (int)(HSVData[i, j].Item3 * 255));
                                     break;
                                 case 5:
-                                    fastBitmap[i, j] = Color.FromArgb((int)(HSVData[i, j].Item3 * 256), (int)(p * 256), (int)(q * 256));
+                                    fastBitmap[i, j] = Color.FromArgb((int)(HSVData[i, j].Item3 * 255), (int)(p * 255), (int)(q * 255));
                                     break;
                             }
 
@@ -219,6 +235,59 @@ namespace Praph2
                 bitmap.Save("../../../../images/результат.jpg");
 
             }
+        }
+
+        //оттенок
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+        }
+        //насыщенность
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        //яркость
+        private void trackBar3_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            double delta = (trackBar3.Value - V) / 256d;
+            for (int i = 0; i < BitmapWidth; i++)
+            {
+                for (int j = 0; j < BitmapHeight; j++)
+                {
+                    HSVData[i, j].Item3 = Math.Min(1, Math.Max(HSVData[i, j].Item3 + delta, 0));
+                }
+            }
+            V = trackBar1.Value;
+        }
+
+        //насыщенность
+        private void trackBar2_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            double delta = (trackBar2.Value - S) / 256d;
+            for (int i = 0; i < BitmapWidth; i++)
+            {
+                for (int j = 0; j < BitmapHeight; j++)
+                {
+                    HSVData[i, j].Item2 = Math.Min(1, Math.Max(HSVData[i, j].Item2 + delta, 0));
+                }
+            }
+            S = trackBar1.Value;
+
+        }
+
+        //цветовой тон
+        private void trackBar1_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            double delta = (trackBar1.Value - H) ;
+            for (int i = 0; i < BitmapWidth; i++)
+            {
+                for (int j = 0; j < BitmapHeight; j++)
+                {
+                    HSVData[i, j].Item1 = Math.Min(359, Math.Max(HSVData[i, j].Item1 + delta, 0));
+                }
+            }
+            H = trackBar1.Value;
         }
     }
 
