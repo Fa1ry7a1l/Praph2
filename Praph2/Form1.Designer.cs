@@ -122,7 +122,6 @@
             trackBar2.Name = "trackBar2";
             trackBar2.Size = new Size(124, 45);
             trackBar2.TabIndex = 4;
-            trackBar2.Scroll += trackBar2_Scroll;
             trackBar2.MouseCaptureChanged += trackBar2_MouseCaptureChanged;
             // 
             // trackBar1
@@ -131,7 +130,6 @@
             trackBar1.Name = "trackBar1";
             trackBar1.Size = new Size(124, 45);
             trackBar1.TabIndex = 3;
-            trackBar1.Scroll += trackBar1_Scroll;
             trackBar1.MouseCaptureChanged += trackBar1_MouseCaptureChanged;
             // 
             // button3
