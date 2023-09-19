@@ -3,6 +3,7 @@ using System.Diagnostics;
 namespace Praph2
 {
     using FastBitmap;
+
     public partial class Form1 : Form
     {
         State curentState = State.Task0;
@@ -13,14 +14,6 @@ namespace Praph2
         {
             InitializeComponent();
             graphics = Canvas.CreateGraphics();
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
         }
 
         //Преобразовать изображение из RGB в оттенки серого. Реализовать два варианта формулы с учетом разных вкладов R, G и B в интенсивность (см презентацию).
@@ -112,11 +105,54 @@ namespace Praph2
         {
             curentState = State.Task3;
 
+            Bitmap bitmap = new Bitmap("../../../../images/ФРУКТЫ.jpg");
+
+
+
+            using (var fastBitmap = new FastBitmap(bitmap))
+            {
+                //сохраняем
+                ValueTuple<double, double, double>[,] HSVData = new ValueTuple<double, double, double>[fastBitmap.Width, fastBitmap.Height];
+
+                for (int i = 0; i < fastBitmap.Width; i++)
+                {
+                    for (int j = 0; j < fastBitmap.Height; j++)
+                    {
+                        var red = fastBitmap[i, j].R / 265d;
+                        var green = fastBitmap[i, j].G / 265d;
+                        var blue = fastBitmap[i, j].B / 265d;
+                        var max = Math.Max(red, Math.Max(green, blue));
+                        var min = Math.Min(red, Math.Min(green, blue));
+                        if (max == red)
+                        {
+                            if(green>=blue)
+                            {
+                                HSVData[i, j].Item1 = 60 *(green - blue)/(max-min);
+                            }
+                            else
+                            {
+                                HSVData[i, j].Item1 = 60 * (green - blue) / (max - min) + 360;
+                            }
+                        }
+                        else if (max == green)
+                        {
+                            HSVData[i, j].Item1 = 60 * (green - blue) / (max - min) + 360;
+                        }
+                        else
+                        {
+
+                        }
+                    }
+        }
+    }
+
+    graphics.Clear(Color.White);
+
         }
     }
 
     enum State
-    {
-        Task0, Task1, Task2, Task3
-    }
+{
+    Task0, Task1, Task2, Task3
+}
 }
