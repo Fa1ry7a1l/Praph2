@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
+            button4 = new Button();
             label3 = new Label();
             trackBar3 = new TrackBar();
             label2 = new Label();
@@ -39,7 +40,6 @@
             button2 = new Button();
             button1 = new Button();
             Canvas = new Panel();
-            button4 = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBar3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar2).BeginInit();
@@ -69,6 +69,16 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Панелька";
+            // 
+            // button4
+            // 
+            button4.Location = new Point(41, 396);
+            button4.Name = "button4";
+            button4.Size = new Size(79, 22);
+            button4.TabIndex = 9;
+            button4.Text = "Сохранить";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // label3
             // 
@@ -156,15 +166,6 @@
             Canvas.Name = "Canvas";
             Canvas.Size = new Size(650, 450);
             Canvas.TabIndex = 1;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(41, 396);
-            button4.Name = "button4";
-            button4.Size = new Size(79, 22);
-            button4.TabIndex = 9;
-            button4.Text = "Сохранить";
-            button4.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
