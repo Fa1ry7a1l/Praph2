@@ -1,3 +1,4 @@
+using System.Diagnostics;
 
 namespace Praph2
 {
@@ -33,8 +34,73 @@ namespace Praph2
 
             graphics.Clear(Color.White);
 
-            Bitmap bitmap = new Bitmap("../../../../images/ФРУКТЫ.jpg");
-            graphics.DrawImage(bitmap, 0, 0);
+            float mult = 2.5f;
+            int div = 8;
+
+            Bitmap bitmap_og = new Bitmap("../../../../images/ФРУКТЫ.jpg");
+            Bitmap bitmap = new Bitmap(bitmap_og, new Size((int)(bitmap_og.Width / mult), (int)(bitmap_og.Height / mult)));
+            Bitmap bitmap_r = new Bitmap(bitmap);
+            Bitmap bitmap_g = new Bitmap(bitmap);
+            Bitmap bitmap_b = new Bitmap(bitmap);
+
+            int width = bitmap.Width;
+            int height = bitmap.Height;
+            int start = width;
+
+            graphics.DrawImage(bitmap, start + 20, 20);
+
+            Debug.WriteLine(bitmap.Width * bitmap.Height);
+
+            //ValueTuple<short, short, short>[] arr = new ValueTuple<short, short, short>[width * height];
+            int[] arr_r = new int[256];
+            int[] arr_g = new int[256];
+            int[] arr_b = new int[256];
+            int j = 0;
+
+            using (var fastBitmap_r = new FastBitmap(bitmap_r))
+            using (var fastBitmap_g = new FastBitmap(bitmap_g))
+            using (var fastBitmap_b = new FastBitmap(bitmap_b))
+            {
+                for (var x = 0; x < fastBitmap_r.Width; x++)
+                    for (var y = 0; y < fastBitmap_r.Height; y++)
+                    {
+                        var color = fastBitmap_r[x, y];
+                        arr_r[color.R]++;
+                        arr_g[color.G]++;
+                        arr_b[color.B]++;
+                        j++;
+                        fastBitmap_r[x, y] = Color.FromArgb(color.R, 0, 0);
+                        fastBitmap_g[x, y] = Color.FromArgb(0, color.G, 0);
+                        fastBitmap_b[x, y] = Color.FromArgb(0, 0, color.B);
+                    }
+            }
+
+            for (int i = 0; i < 256; i++)
+            {
+                arr_r[i] /= div;
+                arr_g[i] /= div;
+                arr_b[i] /= div;
+            }
+
+            graphics.DrawImage(bitmap_r, start + 20, 40 + height);
+            graphics.DrawImage(bitmap_g, start + 40 + width, 20);
+            graphics.DrawImage(bitmap_b, start + 40 + width, 40 + height);
+
+            float boldness = 1.4f;
+            Pen pen_r = new Pen(Color.Red, boldness);
+            Pen pen_g = new Pen(Color.Green, boldness);
+            Pen pen_b = new Pen(Color.Blue, boldness);
+
+            int shift_vert = 20;
+            int shift_hor = 4;
+            int shift_left = 20;
+
+            for (int i = 2; i < 256; i++)
+            {
+                graphics.DrawLine(pen_r, new Point(shift_left + (i - 1) * shift_hor, Canvas.Height - arr_r[i - 1] - shift_vert), new Point(shift_left + i * shift_hor, Canvas.Height - arr_r[i] - shift_vert));
+                graphics.DrawLine(pen_g, new Point(shift_left + (i - 1) * shift_hor, Canvas.Height - arr_g[i - 1] - shift_vert), new Point(shift_left + i * shift_hor, Canvas.Height - arr_g[i] - shift_vert));
+                graphics.DrawLine(pen_b, new Point(shift_left + (i - 1) * shift_hor, Canvas.Height - arr_b[i - 1] - shift_vert), new Point(shift_left + i * shift_hor, Canvas.Height - arr_b[i] - shift_vert));
+            }
         }
 
         //Преобразовать изображение из RGB в HSV. Добавить возможность изменять значения оттенка, насыщенности и яркости.

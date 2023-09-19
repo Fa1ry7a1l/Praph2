@@ -62,8 +62,9 @@
             groupBox1.Controls.Add(button2);
             groupBox1.Controls.Add(button1);
             groupBox1.Dock = DockStyle.Right;
-            groupBox1.Location = new Point(650, 0);
-            groupBox1.MinimumSize = new Size(150, 0);
+            groupBox1.Location = new Point(1142, 0);
+            groupBox1.Margin = new Padding(3, 4, 3, 4);
+            groupBox1.MinimumSize = new Size(171, 0);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(150, 450);
             groupBox1.TabIndex = 0;
@@ -164,14 +165,14 @@
             Canvas.Dock = DockStyle.Fill;
             Canvas.Location = new Point(0, 0);
             Canvas.Name = "Canvas";
-            Canvas.Size = new Size(650, 450);
+            Canvas.Size = new Size(1142, 600);
             Canvas.TabIndex = 1;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1313, 600);
             Controls.Add(Canvas);
             Controls.Add(groupBox1);
             Name = "Form1";
