@@ -14,14 +14,6 @@ namespace Praph2
             graphics = Canvas.CreateGraphics();
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-        }
-
         //Преобразовать изображение из RGB в оттенки серого. Реализовать два варианта формулы с учетом разных вкладов R, G и B в интенсивность (см презентацию).
         //Затем найти разность полученных полутоновых изображений. Построить гистограммы интенсивности после одного и второго преобразования.
         private void button1_Click(object sender, EventArgs e)
@@ -45,6 +37,8 @@ namespace Praph2
         private void button3_Click(object sender, EventArgs e)
         {
             curentState = State.Task3;
+
+            graphics.Clear(Color.White);
 
         }
     }

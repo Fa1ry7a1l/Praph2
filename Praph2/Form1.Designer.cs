@@ -69,7 +69,6 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Панелька";
-            groupBox1.Enter += groupBox1_Enter;
             // 
             // label3
             // 
@@ -105,7 +104,6 @@
             label1.Size = new Size(65, 20);
             label1.TabIndex = 5;
             label1.Text = "Оттенок";
-            label1.Click += label1_Click;
             // 
             // trackBar2
             // 
