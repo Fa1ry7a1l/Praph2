@@ -333,7 +333,7 @@ namespace Praph2
         {
             if (curentState == State.Task3)
             {
-                double delta = (trackBar3.Value - V) / 100d;
+                double delta = (trackBar3.Value - 50) / 50d;
                 for (int i = 0; i < BitmapWidth; i++)
                 {
                     for (int j = 0; j < BitmapHeight; j++)
@@ -353,7 +353,7 @@ namespace Praph2
         {
             if (curentState == State.Task3)
             {
-                double delta = (trackBar2.Value - S) / 100d;
+                double delta = (trackBar2.Value - 50) / 50d;
                 for (int i = 0; i < BitmapWidth; i++)
                 {
                     for (int j = 0; j < BitmapHeight; j++)
