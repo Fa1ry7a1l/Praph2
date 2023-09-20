@@ -173,6 +173,9 @@ namespace Praph2
 
             trackBar1.Minimum = 0;
             trackBar1.Maximum = 360;
+            H = 180;
+            S = 50;
+            V = 50;
 
             trackBar1.Value = 180;
 
@@ -250,15 +253,15 @@ namespace Praph2
         {
             if (curentState == State.Task3)
             {
-                double delta = trackBar3.Value / 100d;
+                double delta = (trackBar3.Value - V) / 100d;
                 for (int i = 0; i < BitmapWidth; i++)
                 {
                     for (int j = 0; j < BitmapHeight; j++)
                     {
-                        HSVData[i, j].Item3 = Math.Min(1, Math.Max( delta, 0));
+                        HSVData[i, j].Item3 = Math.Min(1, Math.Max(HSVData[i, j].Item3 + delta, 0));
                     }
                 }
-                V = trackBar1.Value;
+                V = trackBar3.Value;
                 Bitmap bitmap = GetBitmap();
                 graphics.Clear(Color.White);
                 graphics.DrawImage(bitmap, 0, 0);  
@@ -270,15 +273,15 @@ namespace Praph2
         {
             if (curentState == State.Task3)
             {
-                double delta = trackBar2.Value / 100d;
+                double delta = (trackBar2.Value - S) / 100d;
                 for (int i = 0; i < BitmapWidth; i++)
                 {
                     for (int j = 0; j < BitmapHeight; j++)
                     {
-                        HSVData[i, j].Item2 = Math.Min(1, Math.Max( delta, 0));
+                        HSVData[i, j].Item2 = Math.Min(1, Math.Max(HSVData[i, j].Item2 + delta, 0));
                     }
                 }
-                S = trackBar1.Value;
+                S = trackBar2.Value;
 
                 Bitmap bitmap = GetBitmap();
                 graphics.Clear(Color.White);
