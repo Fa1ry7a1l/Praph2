@@ -14,6 +14,7 @@ namespace Praph2
         private Graphics graphics;
 
         ValueTuple<double, double, double>[,] HSVData;
+        ValueTuple<double, double, double>[,] HSVDataModified;
 
         public Form1()
         {
@@ -118,6 +119,8 @@ namespace Praph2
             {
                 //сохраняем H S V
                 HSVData = new ValueTuple<double, double, double>[fastBitmap.Width, fastBitmap.Height];
+                HSVDataModified = new ValueTuple<double, double, double>[fastBitmap.Width, fastBitmap.Height];
+
                 BitmapHeight = fastBitmap.Height;
                 BitmapWidth = fastBitmap.Width;
 
@@ -164,12 +167,14 @@ namespace Praph2
                             HSVData[i, j].Item2 = 1 - min / max;
                         }
                         HSVData[i, j].Item3 = max;
+                        HSVDataModified[i, j] = HSVData[i, j]; //todo слабое место
                     }
                 }
             }
 
             graphics.Clear(Color.White);
-            graphics.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
+            Bitmap bitmapTemp = GetBitmap();
+            graphics.DrawImage(bitmapTemp, 0, 0, bitmap.Width, bitmap.Height);
 
             trackBar1.Minimum = 0;
             trackBar1.Maximum = 359;
@@ -179,13 +184,13 @@ namespace Praph2
 
             trackBar1.Value = 180;
 
-            trackBar2.Maximum = 200;
+            trackBar2.Maximum = 100;
             trackBar2.Minimum = 0;
-            trackBar2.Value = 100;
+            trackBar2.Value = 50;
 
-            trackBar3.Maximum = 200;
+            trackBar3.Maximum = 100;
             trackBar3.Minimum = 0;
-            trackBar3.Value = 100;
+            trackBar3.Value = 50;
         }
 
         private Bitmap GetBitmap()
@@ -198,30 +203,30 @@ namespace Praph2
                 {
                     for (int j = 0; j < fastBitmap.Height; j++)
                     {
-                        var Hi = (int)Math.Floor(HSVData[i, j].Item1 / 60) % 6;
-                        var f = HSVData[i, j].Item1 / 60 - Math.Floor(HSVData[i, j].Item1 / 60);
-                        var p = HSVData[i, j].Item3 * (1 - HSVData[i, j].Item2);
-                        var q = HSVData[i, j].Item3 * (1 - f * HSVData[i, j].Item2);
-                        var t = HSVData[i, j].Item3 * (1 - (1 - f) * HSVData[i, j].Item2);
+                        var Hi = (int)Math.Floor(HSVDataModified[i, j].Item1 / 60) % 6;
+                        var f = HSVDataModified[i, j].Item1 / 60 - Math.Floor(HSVDataModified[i, j].Item1 / 60);
+                        var p = HSVDataModified[i, j].Item3 * (1 - HSVDataModified[i, j].Item2);
+                        var q = HSVDataModified[i, j].Item3 * (1 - f * HSVDataModified[i, j].Item2);
+                        var t = HSVDataModified[i, j].Item3 * (1 - (1 - f) * HSVDataModified[i, j].Item2);
                         switch (Hi)
                         {
                             case 0:
-                                fastBitmap[i, j] = Color.FromArgb((int)(HSVData[i, j].Item3 * 255), (int)(t * 255), (int)(p * 255));
+                                fastBitmap[i, j] = Color.FromArgb((int)(HSVDataModified[i, j].Item3 * 255), (int)(t * 255), (int)(p * 255));
                                 break;
                             case 1:
-                                fastBitmap[i, j] = Color.FromArgb((int)(q * 255), (int)(HSVData[i, j].Item3 * 255), (int)(p * 255));
+                                fastBitmap[i, j] = Color.FromArgb((int)(q * 255), (int)(HSVDataModified[i, j].Item3 * 255), (int)(p * 255));
                                 break;
                             case 2:
-                                fastBitmap[i, j] = Color.FromArgb((int)(p * 255), (int)(HSVData[i, j].Item3 * 255), (int)(t * 255));
+                                fastBitmap[i, j] = Color.FromArgb((int)(p * 255), (int)(HSVDataModified[i, j].Item3 * 255), (int)(t * 255));
                                 break;
                             case 3:
-                                fastBitmap[i, j] = Color.FromArgb((int)(p * 255), (int)(q * 255), (int)(HSVData[i, j].Item3 * 255));
+                                fastBitmap[i, j] = Color.FromArgb((int)(p * 255), (int)(q * 255), (int)(HSVDataModified[i, j].Item3 * 255));
                                 break;
                             case 4:
-                                fastBitmap[i, j] = Color.FromArgb((int)(t * 255), (int)(p * 255), (int)(HSVData[i, j].Item3 * 255));
+                                fastBitmap[i, j] = Color.FromArgb((int)(t * 255), (int)(p * 255), (int)(HSVDataModified[i, j].Item3 * 255));
                                 break;
                             case 5:
-                                fastBitmap[i, j] = Color.FromArgb((int)(HSVData[i, j].Item3 * 255), (int)(p * 255), (int)(q * 255));
+                                fastBitmap[i, j] = Color.FromArgb((int)(HSVDataModified[i, j].Item3 * 255), (int)(p * 255), (int)(q * 255));
                                 break;
                         }
 
@@ -245,6 +250,7 @@ namespace Praph2
                 curentState = State.Task0;
                 graphics.Clear(Color.White);
                 Process.Start("explorer.exe", @"..\..\..\..\images\");
+
             }
         }
 
@@ -258,7 +264,7 @@ namespace Praph2
                 {
                     for (int j = 0; j < BitmapHeight; j++)
                     {
-                        HSVData[i, j].Item3 = Math.Min(1, Math.Max(HSVData[i, j].Item3 + delta, 0));
+                        HSVDataModified[i, j].Item3 = Math.Min(1, Math.Max(HSVData[i, j].Item3 + delta, 0));
                     }
                 }
                 V = trackBar3.Value;
@@ -278,7 +284,7 @@ namespace Praph2
                 {
                     for (int j = 0; j < BitmapHeight; j++)
                     {
-                        HSVData[i, j].Item2 = Math.Min(1, Math.Max(HSVData[i, j].Item2 + delta, 0));
+                        HSVDataModified[i, j].Item2 = Math.Min(1, Math.Max(HSVData[i, j].Item2 + delta, 0));
                     }
                 }
                 S = trackBar2.Value;
@@ -300,7 +306,7 @@ namespace Praph2
                 {
                     for (int j = 0; j < BitmapHeight; j++)
                     {
-                        HSVData[i, j].Item1 = Math.Min(359, Math.Max(trackBar1.Value, 0));
+                        HSVDataModified[i, j].Item1 = Math.Min(359, Math.Max(trackBar1.Value, 0));
                     }
                 }
                 H = trackBar1.Value;
