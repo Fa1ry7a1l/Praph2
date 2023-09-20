@@ -248,12 +248,12 @@ namespace Praph2
             }
         }
 
-        //яркость
+        //Значение
         private void trackBar3_MouseCaptureChanged(object sender, EventArgs e)
         {
             if (curentState == State.Task3)
             {
-                double delta = (trackBar3.Value - V) / 200d;
+                double delta = (trackBar3.Value - V) / 100d;
                 for (int i = 0; i < BitmapWidth; i++)
                 {
                     for (int j = 0; j < BitmapHeight; j++)
@@ -264,7 +264,7 @@ namespace Praph2
                 V = trackBar3.Value;
                 Bitmap bitmap = GetBitmap();
                 graphics.Clear(Color.White);
-                graphics.DrawImage(bitmap, 0, 0);  
+                graphics.DrawImage(bitmap, 0, 0);
             }
         }
 
@@ -273,7 +273,7 @@ namespace Praph2
         {
             if (curentState == State.Task3)
             {
-                double delta = (trackBar2.Value - S) / 200d;
+                double delta = (trackBar2.Value - S) / 100d;
                 for (int i = 0; i < BitmapWidth; i++)
                 {
                     for (int j = 0; j < BitmapHeight; j++)
@@ -288,14 +288,14 @@ namespace Praph2
                 graphics.DrawImage(bitmap, 0, 0);
             }
 
-            }
+        }
 
         //цветовой тон
         private void trackBar1_MouseCaptureChanged(object sender, EventArgs e)
         {
             if (curentState == State.Task3)
             {
-                double delta = trackBar1.Value - H ;
+                double delta = trackBar1.Value - H;
                 for (int i = 0; i < BitmapWidth; i++)
                 {
                     for (int j = 0; j < BitmapHeight; j++)
@@ -309,6 +309,11 @@ namespace Praph2
                 graphics.Clear(Color.White);
                 graphics.DrawImage(bitmap, 0, 0);
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
