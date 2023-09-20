@@ -27,6 +27,80 @@ namespace Praph2
         private void button1_Click(object sender, EventArgs e)
         {
             curentState = State.Task1;
+            Bitmap bitmap_og = new Bitmap("../../../../images/ФРУКТЫ.jpg");
+            Bitmap bitmap = new Bitmap(bitmap_og, new Size((int)(bitmap_og.Width / 2), (int)(bitmap_og.Height / 2)));
+            Bitmap bitmap2 = new Bitmap(bitmap_og, new Size((int)(bitmap_og.Width / 2), (int)(bitmap_og.Height / 2)));
+            Bitmap bitmap_diff = new Bitmap(bitmap.Width, bitmap.Height);
+
+            Bitmap barChart = new Bitmap(bitmap.Width, bitmap.Height);
+
+            graphics.Clear(Color.White);
+            graphics.DrawImage(bitmap, bitmap.Width, 20);
+            int[] intensity1 = new int[256];
+            int[] intensity2 = new int[256];
+
+            using (var fastBitmap_gray = new FastBitmap(bitmap))
+            using (var fastBitmap_gray2 = new FastBitmap(bitmap2))
+            using (var fastBitmap_diff = new FastBitmap(bitmap_diff))
+            {
+                for (var x = 0; x < fastBitmap_gray.Width; x++)
+                {
+                    for (var y = 0; y < fastBitmap_gray.Height; y++)
+                    {
+                        Point pixel = new Point(x, y);
+                        var color = fastBitmap_gray.GetPixel( pixel);
+
+                        int gray = (int)(color.R * 0.299 + color.G * 0.587 + color.B * 0.114);
+                        int gray2 = (int)(color.R * 0.2126 + color.G * 0.7152 + color.B * 0.0722);
+                        intensity1[gray]++;
+                        intensity2[gray2]++;
+
+                        fastBitmap_gray.SetPixel(pixel, Color.FromArgb(gray, gray, gray));
+                        fastBitmap_gray2.SetPixel(pixel, Color.FromArgb(gray2, gray2, gray2));
+                        int diff = Math.Abs(gray - gray2);
+
+                        Color diffColor = Color.FromArgb(diff, diff, diff);
+                        fastBitmap_diff.SetPixel(pixel, diffColor);
+
+                    }
+                }
+            }
+
+
+            graphics.DrawImage(bitmap, 2 * bitmap.Width + 20, 20);
+            graphics.DrawImage(bitmap2, bitmap.Width, bitmap.Height + 40);
+            graphics.DrawImage(bitmap_diff, 2 * bitmap.Width + 20, bitmap.Height + 40);
+
+
+
+            int max = 0;
+            for (int i = 0; i < 256; ++i)
+            {
+                if (intensity1[i] > max)
+                    max = intensity1[i];
+                if (intensity2[i] > max)
+                    max = intensity2[i];
+
+            }
+            // определяем коэффициент масштабирования по высоте
+            double point = (double)max / bitmap.Height;
+            // отрисовываем столбец за столбцом нашу гистограмму с учетом масштаба
+            for (int i = 0; i < bitmap.Width - 3; ++i)
+            {
+                for (int j = bitmap.Height - 1; j > bitmap.Height - intensity1[i / 3] / point; --j)
+                {
+                    barChart.SetPixel(i, j, Color.Red);
+                }
+                ++i;
+                for (int j = bitmap.Height - 1; j > bitmap.Height - intensity2[i / 3] / point; --j)
+                {
+                    barChart.SetPixel(i, j, Color.Black);
+                }
+                ++i;
+
+            }
+
+            graphics.DrawImage(barChart, 0, 2 * bitmap.Height);
         }
 
         //Выделить из полноцветного изображения каждый из каналов R, G, B  и вывести результат. Построить гистограмму по цветам (3 штуки).
