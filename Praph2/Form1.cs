@@ -125,9 +125,9 @@ namespace Praph2
                         var min = Math.Min(red, Math.Min(green, blue));
                         if (max == red)
                         {
-                            if(green>=blue)
+                            if (green >= blue)
                             {
-                                HSVData[i, j].Item1 = 60 *(green - blue)/(max-min);
+                                HSVData[i, j].Item1 = 60 * (green - blue) / (max - min);
                             }
                             else
                             {
@@ -143,16 +143,16 @@ namespace Praph2
 
                         }
                     }
-        }
-    }
+                }
+            }
 
-    graphics.Clear(Color.White);
+            graphics.Clear(Color.White);
 
         }
     }
 
     enum State
-{
-    Task0, Task1, Task2, Task3
-}
+    {
+        Task0, Task1, Task2, Task3
+    }
 }
