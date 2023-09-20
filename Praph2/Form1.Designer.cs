@@ -66,30 +66,30 @@
             groupBox1.Margin = new Padding(3, 5, 3, 5);
             groupBox1.MinimumSize = new Size(195, 0);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 4, 3, 4);
-            groupBox1.Size = new Size(195, 800);
+            groupBox1.Size = new Size(171, 600);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Панелька";
             // 
             // button4
             // 
-            button4.Location = new Point(39, 524);
-            button4.Margin = new Padding(3, 4, 3, 4);
+            button4.Location = new Point(41, 396);
             button4.Name = "button4";
-            button4.Size = new Size(98, 29);
+            button4.Size = new Size(79, 22);
             button4.TabIndex = 9;
             button4.Text = "Сохранить";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Location = new Point(22, 436);
             label3.Name = "label3";
-            label3.Size = new Size(64, 20);
+            label3.Size = new Size(60, 15);
             label3.TabIndex = 8;
-            label3.Text = "Яркость";
+            label3.Text = "Значение";
+            label3.Click += label3_Click;
             // 
             // trackBar3
             // 
@@ -98,6 +98,7 @@
             trackBar3.Name = "trackBar3";
             trackBar3.Size = new Size(142, 56);
             trackBar3.TabIndex = 7;
+            trackBar3.MouseCaptureChanged += trackBar3_MouseCaptureChanged;
             // 
             // label2
             // 
@@ -124,6 +125,7 @@
             trackBar2.Name = "trackBar2";
             trackBar2.Size = new Size(142, 56);
             trackBar2.TabIndex = 4;
+            trackBar2.MouseCaptureChanged += trackBar2_MouseCaptureChanged;
             // 
             // trackBar1
             // 
@@ -132,6 +134,7 @@
             trackBar1.Name = "trackBar1";
             trackBar1.Size = new Size(142, 56);
             trackBar1.TabIndex = 3;
+            trackBar1.MouseCaptureChanged += trackBar1_MouseCaptureChanged;
             // 
             // button3
             // 

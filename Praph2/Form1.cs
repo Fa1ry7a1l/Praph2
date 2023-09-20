@@ -7,8 +7,13 @@ namespace Praph2
     public partial class Form1 : Form
     {
         State curentState = State.Task0;
+        private int BitmapHeight;
+        private int BitmapWidth;
+        int S, H, V;
 
         private Graphics graphics;
+
+        ValueTuple<double, double, double>[,] HSVData;
 
         public Form1()
         {
@@ -111,8 +116,10 @@ namespace Praph2
 
             using (var fastBitmap = new FastBitmap(bitmap))
             {
-                //сохраняем
-                ValueTuple<double, double, double>[,] HSVData = new ValueTuple<double, double, double>[fastBitmap.Width, fastBitmap.Height];
+                //сохраняем H S V
+                HSVData = new ValueTuple<double, double, double>[fastBitmap.Width, fastBitmap.Height];
+                BitmapHeight = fastBitmap.Height;
+                BitmapWidth = fastBitmap.Width;
 
                 for (int i = 0; i < fastBitmap.Width; i++)
                 {
@@ -123,7 +130,11 @@ namespace Praph2
                         var blue = fastBitmap[i, j].B / 265d;
                         var max = Math.Max(red, Math.Max(green, blue));
                         var min = Math.Min(red, Math.Min(green, blue));
-                        if (max == red)
+                        if (max == min)
+                        {
+                            HSVData[i, j].Item1 = 0;
+                        }
+                        else if (max == red)
                         {
                             if (green >= blue)
                             {
@@ -136,17 +147,172 @@ namespace Praph2
                         }
                         else if (max == green)
                         {
-                            HSVData[i, j].Item1 = 60 * (green - blue) / (max - min) + 360;
+                            HSVData[i, j].Item1 = 60 * (blue - red) / (max - min) + 120;
                         }
                         else
                         {
+                            HSVData[i, j].Item1 = 60 * (red - green) / (max - min) + 240;
 
                         }
+
+                        if (max < double.Epsilon)
+                        {
+                            HSVData[i, j].Item2 = 0;
+                        }
+                        else
+                        {
+                            HSVData[i, j].Item2 = 1 - min / max;
+                        }
+                        HSVData[i, j].Item3 = max;
                     }
                 }
             }
 
             graphics.Clear(Color.White);
+            graphics.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
+
+            trackBar1.Minimum = 0;
+            trackBar1.Maximum = 359;
+            H = 180;
+            S = 100;
+            V = 100;
+
+            trackBar1.Value = 180;
+
+            trackBar2.Maximum = 200;
+            trackBar2.Minimum = 0;
+            trackBar2.Value = 100;
+
+            trackBar3.Maximum = 200;
+            trackBar3.Minimum = 0;
+            trackBar3.Value = 100;
+        }
+
+        private Bitmap GetBitmap()
+        {
+            Bitmap bitmap = new Bitmap(BitmapWidth, BitmapHeight);
+            using (var fastBitmap = new FastBitmap(bitmap))
+            {
+
+                for (int i = 0; i < fastBitmap.Width; i++)
+                {
+                    for (int j = 0; j < fastBitmap.Height; j++)
+                    {
+                        var Hi = (int)Math.Floor(HSVData[i, j].Item1 / 60) % 6;
+                        var f = HSVData[i, j].Item1 / 60 - Math.Floor(HSVData[i, j].Item1 / 60);
+                        var p = HSVData[i, j].Item3 * (1 - HSVData[i, j].Item2);
+                        var q = HSVData[i, j].Item3 * (1 - f * HSVData[i, j].Item2);
+                        var t = HSVData[i, j].Item3 * (1 - (1 - f) * HSVData[i, j].Item2);
+                        switch (Hi)
+                        {
+                            case 0:
+                                fastBitmap[i, j] = Color.FromArgb((int)(HSVData[i, j].Item3 * 255), (int)(t * 255), (int)(p * 255));
+                                break;
+                            case 1:
+                                fastBitmap[i, j] = Color.FromArgb((int)(q * 255), (int)(HSVData[i, j].Item3 * 255), (int)(p * 255));
+                                break;
+                            case 2:
+                                fastBitmap[i, j] = Color.FromArgb((int)(p * 255), (int)(HSVData[i, j].Item3 * 255), (int)(t * 255));
+                                break;
+                            case 3:
+                                fastBitmap[i, j] = Color.FromArgb((int)(p * 255), (int)(q * 255), (int)(HSVData[i, j].Item3 * 255));
+                                break;
+                            case 4:
+                                fastBitmap[i, j] = Color.FromArgb((int)(t * 255), (int)(p * 255), (int)(HSVData[i, j].Item3 * 255));
+                                break;
+                            case 5:
+                                fastBitmap[i, j] = Color.FromArgb((int)(HSVData[i, j].Item3 * 255), (int)(p * 255), (int)(q * 255));
+                                break;
+                        }
+
+
+                    }
+                }
+
+
+            }
+            return bitmap;
+        }
+
+
+        //сохранение задания 3 по формулам из презы
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (curentState == State.Task3)
+            {
+                Bitmap bitmap = GetBitmap();
+                bitmap.Save("../../../../images/результат.jpg");
+                curentState = State.Task0;
+                graphics.Clear(Color.White);
+                Process.Start("explorer.exe", @"..\..\..\..\images\");
+            }
+        }
+
+        //Значение
+        private void trackBar3_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            if (curentState == State.Task3)
+            {
+                double delta = (trackBar3.Value - V) / 100d;
+                for (int i = 0; i < BitmapWidth; i++)
+                {
+                    for (int j = 0; j < BitmapHeight; j++)
+                    {
+                        HSVData[i, j].Item3 = Math.Min(1, Math.Max(HSVData[i, j].Item3 + delta, 0));
+                    }
+                }
+                V = trackBar3.Value;
+                Bitmap bitmap = GetBitmap();
+                graphics.Clear(Color.White);
+                graphics.DrawImage(bitmap, 0, 0);
+            }
+        }
+
+        //насыщенность
+        private void trackBar2_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            if (curentState == State.Task3)
+            {
+                double delta = (trackBar2.Value - S) / 100d;
+                for (int i = 0; i < BitmapWidth; i++)
+                {
+                    for (int j = 0; j < BitmapHeight; j++)
+                    {
+                        HSVData[i, j].Item2 = Math.Min(1, Math.Max(HSVData[i, j].Item2 + delta, 0));
+                    }
+                }
+                S = trackBar2.Value;
+
+                Bitmap bitmap = GetBitmap();
+                graphics.Clear(Color.White);
+                graphics.DrawImage(bitmap, 0, 0);
+            }
+
+        }
+
+        //цветовой тон
+        private void trackBar1_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            if (curentState == State.Task3)
+            {
+                double delta = trackBar1.Value - H;
+                for (int i = 0; i < BitmapWidth; i++)
+                {
+                    for (int j = 0; j < BitmapHeight; j++)
+                    {
+                        HSVData[i, j].Item1 = Math.Min(359, Math.Max(trackBar1.Value, 0));
+                    }
+                }
+                H = trackBar1.Value;
+
+                Bitmap bitmap = GetBitmap();
+                graphics.Clear(Color.White);
+                graphics.DrawImage(bitmap, 0, 0);
+            }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
 
         }
     }
