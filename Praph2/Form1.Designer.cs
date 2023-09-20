@@ -62,10 +62,11 @@
             groupBox1.Controls.Add(button2);
             groupBox1.Controls.Add(button1);
             groupBox1.Dock = DockStyle.Right;
-            groupBox1.Location = new Point(1306, 0);
-            groupBox1.Margin = new Padding(3, 5, 3, 5);
-            groupBox1.MinimumSize = new Size(195, 0);
+            groupBox1.Location = new Point(1142, 0);
+            groupBox1.Margin = new Padding(3, 4, 3, 4);
+            groupBox1.MinimumSize = new Size(171, 0);
             groupBox1.Name = "groupBox1";
+            groupBox1.Padding = new Padding(3, 2, 3, 2);
             groupBox1.Size = new Size(171, 600);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
@@ -73,7 +74,8 @@
             // 
             // button4
             // 
-            button4.Location = new Point(41, 396);
+            button4.Location = new Point(41, 407);
+            button4.Margin = new Padding(3, 2, 3, 2);
             button4.Name = "button4";
             button4.Size = new Size(79, 22);
             button4.TabIndex = 9;
@@ -84,7 +86,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(22, 436);
+            label3.Location = new Point(19, 327);
             label3.Name = "label3";
             label3.Size = new Size(60, 15);
             label3.TabIndex = 8;
@@ -93,55 +95,51 @@
             // 
             // trackBar3
             // 
-            trackBar3.Location = new Point(16, 460);
-            trackBar3.Margin = new Padding(3, 4, 3, 4);
+            trackBar3.Location = new Point(14, 345);
             trackBar3.Name = "trackBar3";
-            trackBar3.Size = new Size(142, 56);
+            trackBar3.Size = new Size(124, 45);
             trackBar3.TabIndex = 7;
             trackBar3.MouseCaptureChanged += trackBar3_MouseCaptureChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(22, 355);
+            label2.Location = new Point(19, 266);
             label2.Name = "label2";
-            label2.Size = new Size(114, 20);
+            label2.Size = new Size(92, 15);
             label2.TabIndex = 6;
             label2.Text = "Насыщенность";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(22, 264);
+            label1.Location = new Point(19, 198);
             label1.Name = "label1";
-            label1.Size = new Size(65, 20);
+            label1.Size = new Size(52, 15);
             label1.TabIndex = 5;
             label1.Text = "Оттенок";
             // 
             // trackBar2
             // 
-            trackBar2.Location = new Point(16, 379);
-            trackBar2.Margin = new Padding(3, 4, 3, 4);
+            trackBar2.Location = new Point(14, 284);
             trackBar2.Name = "trackBar2";
-            trackBar2.Size = new Size(142, 56);
+            trackBar2.Size = new Size(124, 45);
             trackBar2.TabIndex = 4;
             trackBar2.MouseCaptureChanged += trackBar2_MouseCaptureChanged;
             // 
             // trackBar1
             // 
-            trackBar1.Location = new Point(16, 291);
-            trackBar1.Margin = new Padding(3, 4, 3, 4);
+            trackBar1.Location = new Point(14, 218);
             trackBar1.Name = "trackBar1";
-            trackBar1.Size = new Size(142, 56);
+            trackBar1.Size = new Size(124, 45);
             trackBar1.TabIndex = 3;
             trackBar1.MouseCaptureChanged += trackBar1_MouseCaptureChanged;
             // 
             // button3
             // 
-            button3.Location = new Point(47, 231);
-            button3.Margin = new Padding(3, 4, 3, 4);
+            button3.Location = new Point(41, 173);
             button3.Name = "button3";
-            button3.Size = new Size(90, 29);
+            button3.Size = new Size(79, 22);
             button3.TabIndex = 2;
             button3.Text = "Задание 3";
             button3.UseVisualStyleBackColor = true;
@@ -149,10 +147,9 @@
             // 
             // button2
             // 
-            button2.Location = new Point(47, 151);
-            button2.Margin = new Padding(3, 4, 3, 4);
+            button2.Location = new Point(41, 113);
             button2.Name = "button2";
-            button2.Size = new Size(90, 29);
+            button2.Size = new Size(79, 22);
             button2.TabIndex = 1;
             button2.Text = "Задание 2";
             button2.UseVisualStyleBackColor = true;
@@ -160,10 +157,9 @@
             // 
             // button1
             // 
-            button1.Location = new Point(47, 69);
-            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Location = new Point(41, 52);
             button1.Name = "button1";
-            button1.Size = new Size(90, 29);
+            button1.Size = new Size(79, 22);
             button1.TabIndex = 0;
             button1.Text = "Задание 1";
             button1.UseVisualStyleBackColor = true;
@@ -174,19 +170,17 @@
             Canvas.BackColor = SystemColors.Window;
             Canvas.Dock = DockStyle.Fill;
             Canvas.Location = new Point(0, 0);
-            Canvas.Margin = new Padding(3, 4, 3, 4);
             Canvas.Name = "Canvas";
-            Canvas.Size = new Size(1306, 800);
+            Canvas.Size = new Size(1142, 600);
             Canvas.TabIndex = 1;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1501, 800);
+            ClientSize = new Size(1313, 600);
             Controls.Add(Canvas);
             Controls.Add(groupBox1);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Графика. Лабораторная 2";
             groupBox1.ResumeLayout(false);
