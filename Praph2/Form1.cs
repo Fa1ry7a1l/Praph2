@@ -31,8 +31,7 @@ namespace Praph2
             Bitmap bitmap = new Bitmap(bitmap_og, new Size((int)(bitmap_og.Width / 2), (int)(bitmap_og.Height / 2)));
             Bitmap bitmap2 = new Bitmap(bitmap_og, new Size((int)(bitmap_og.Width / 2), (int)(bitmap_og.Height / 2)));
             Bitmap bitmap_diff = new Bitmap(bitmap.Width, bitmap.Height);
-
-            Bitmap barChart = new Bitmap(bitmap.Width, bitmap.Height);
+            Bitmap barChart = new Bitmap(bitmap.Width * 2, bitmap.Height);
 
             graphics.Clear(Color.White);
             graphics.DrawImage(bitmap, bitmap.Width, 20);
@@ -71,8 +70,7 @@ namespace Praph2
             graphics.DrawImage(bitmap2, bitmap.Width, bitmap.Height + 40);
             graphics.DrawImage(bitmap_diff, 2 * bitmap.Width + 20, bitmap.Height + 40);
 
-
-
+            
             int max = 0;
             for (int i = 0; i < 256; ++i)
             {
@@ -80,24 +78,26 @@ namespace Praph2
                     max = intensity1[i];
                 if (intensity2[i] > max)
                     max = intensity2[i];
-
             }
-            // определяем коэффициент масштабирования по высоте
+
+            // Определяем коэффициент масштабирования по высоте
             double point = (double)max / bitmap.Height;
-            // отрисовываем столбец за столбцом нашу гистограмму с учетом масштаба
+
+            // Отрисовываем столбец за столбцом нашу гистограмму с учетом масштаба
             for (int i = 0; i < bitmap.Width - 3; ++i)
             {
                 for (int j = bitmap.Height - 1; j > bitmap.Height - intensity1[i / 3] / point; --j)
                 {
-                    barChart.SetPixel(i, j, Color.Red);
+                    barChart.SetPixel(i * 2, j, Color.Red);
+                    barChart.SetPixel(i * 2 + 1, j, Color.Red);
                 }
                 ++i;
                 for (int j = bitmap.Height - 1; j > bitmap.Height - intensity2[i / 3] / point; --j)
                 {
-                    barChart.SetPixel(i, j, Color.Black);
+                    barChart.SetPixel(i * 2, j, Color.Black);
+                    barChart.SetPixel(i * 2 + 1, j, Color.Black);
                 }
                 ++i;
-
             }
 
             graphics.DrawImage(barChart, 0, 2 * bitmap.Height);
